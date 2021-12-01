@@ -7,7 +7,7 @@ const moreTicketsSchema = {
       description: 'Enter your choice (y/n)'
     }
   }
-}
+};
 
 const optionSchema = {
   properties: {
@@ -18,7 +18,7 @@ const optionSchema = {
       description: 'Enter your option'
     }
   }
-}
+};
 const mainMenuSchema = {
   properties: {
     mainMenuOption: {
@@ -28,7 +28,7 @@ const mainMenuSchema = {
       description: 'Enter your option'
     }
   }
-}
+};
 
 const ticketIdSchema = {
   properties: {
@@ -39,6 +39,6 @@ const ticketIdSchema = {
       description: 'Please enter the ticket ID'
     }
   }
-}
+};
 
-export default { mainMenuSchema, ticketIdSchema, optionSchema, moreTicketsSchema }
+export default { mainMenuSchema, ticketIdSchema, optionSchema, moreTicketsSchema };

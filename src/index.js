@@ -1,12 +1,12 @@
-import { menus } from './menus.js'
-import output from './output.js'
-import { optionKey, mainOptionKey } from './config.js'
-import { getTicketById, getMultipleTickets } from './requestUtils.js'
-import prompt from 'prompt'
-prompt.start()
+import { menus } from './menus.js';
+import output from './output.js';
+import { optionKey, mainOptionKey } from './config.js';
+import { getTicketById, getMultipleTickets } from './requestUtils.js';
+import prompt from 'prompt';
+prompt.start();
 
-prompt.message = ''
-prompt.delimiter = ':'
+prompt.message = '';
+prompt.delimiter = ':';
 const optionSchema = {
   properties: {
     option: {
@@ -16,7 +16,7 @@ const optionSchema = {
       description: 'Enter your option'
     }
   }
-}
+};
 const mainMenuSchema = {
   properties: {
     mainMenuOption: {
@@ -26,7 +26,7 @@ const mainMenuSchema = {
       description: 'Enter your option'
     }
   }
-}
+};
 
 const ticketIdSchema = {
   properties: {
@@ -37,31 +37,36 @@ const ticketIdSchema = {
       description: 'Please enter the ticket ID'
     }
   }
-}
+};
 
 async function main () {
-  let programExit = true
+  let programExit = true;
 
-  output.show(menus.entry)
-  const { mainMenuOption } = await prompt.get(mainMenuSchema)
+  output.show(menus.entry);
+  const { mainMenuOption } = await prompt.get(mainMenuSchema);
   if (mainMenuOption == mainOptionKey.ENTER) {
-    programExit = false
+    programExit = false;
   }
 
   while (!programExit) {
-    output.show(menus.mainMenu)
-    const { option } = await prompt.get(optionSchema)
-    console.log('You entered option: ' + option)
-    if (option == optionKey.GET_BY_ID) {
-      output.show(menus.ticketById)
-      const { ticketId } = await prompt.get(ticketIdSchema)
-      await getTicketById(Number(ticketId))
-    } else if (option == optionKey.GET_ALL) {
-      const currentPage = 0
-      await getMultipleTickets(currentPage)
-    } else if (option == optionKey.EXIT) { programExit = true }
+    try {
+      output.show(menus.mainMenu);
+      const { option } = await prompt.get(optionSchema);
+      console.log('You entered option: ' + option);
+      if (option == optionKey.GET_BY_ID) {
+        output.show(menus.ticketById);
+        const { ticketId } = await prompt.get(ticketIdSchema);
+        await getTicketById(Number(ticketId));
+      } else if (option == optionKey.GET_ALL) {
+        const currentPage = 0;
+        await getMultipleTickets(currentPage);
+      } else if (option == optionKey.EXIT) { programExit = true; }
+    } catch (err) {
+      programExit=true;
+    }
+    
   }
-  output.show(menus.exit)
+  output.show(menus.exit);
 }
 
 main();
