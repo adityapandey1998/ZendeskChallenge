@@ -62,6 +62,7 @@ async function main () {
         await getMultipleTickets(currentPage);
       } else if (option == optionKey.EXIT) { programExit = true; }
     } catch (err) {
+      console.log(err);
       programExit=true;
     }
     

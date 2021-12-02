@@ -94,6 +94,7 @@ async function getMultipleTickets (currOffset) {
       }
     } catch (err) {
       paginationExit = true;
+      console.log(err);
       console.log(err.response.status);
       if (err.response.status == 404) {
         output.showNotFoundError();
