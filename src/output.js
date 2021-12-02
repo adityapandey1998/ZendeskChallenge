@@ -9,14 +9,27 @@ function show (message) {
 
 function showSingleTicket (response) {
   if (response.status == 200) {
-    const { subject, requester_id: requesterId, updated_at: updatedAt, status, id } = response.data.ticket;
-    const outputString = '\nYour ticket - \n' +
-        `\n Id: ${chalk.cyan(id)}` +
-        `\n Subject: ${chalk.cyan(subject)}` +
-        `\n Requested By: ${chalk.cyan(requesterId)}` +
-        `\n Last Updated: ${chalk.cyan(date.format(new Date(updatedAt), 'ddd, MMM DD YYYY at h:mm A'))}` +
-        `\n Current Status: ${chalk.cyan(changeCase.headerCase(status))}`;
-    console.log(outputString);
+    const { subject, requester_id: requesterId, updated_at: updatedAt, status, id, description, priority, url } = response.data.ticket;
+    // const outputString = '\nYour ticket - \n' +
+    //     `\n Id: ${chalk.cyan(id)}` +
+    //     `\n Subject: ${chalk.cyan(subject)}` +
+    //     `\n Requested By: ${chalk.cyan(requesterId)}` +
+    //     `\n Last Updated: ${chalk.cyan(date.format(new Date(updatedAt), 'ddd, MMM DD YYYY at h:mm A'))}` +
+    //     `\n Current Status: ${chalk.cyan(changeCase.headerCase(status))}`;
+    // console.log(outputString);
+    if(priority==null)
+      priority="None";
+    let outputDict = [{
+      "Ticket Id": id,
+      "Subject": subject,
+      "Requested By": requesterId,
+      "Last Updated": date.format(new Date(updatedAt), 'ddd, MMM DD YYYY at h:mm A'),
+      "Current Status": changeCase.headerCase(status),
+      // "Description": description,
+      "Priority" : priority,
+      "URL": url
+    }];
+    console.table(outputDict);
   } else {
     console.log('Invalid ID');
   }
@@ -47,6 +60,7 @@ function showGenericError () {
 }
 
 function showMultipleTickets (tickets) {
+  var dictTickets = [];
   for (let i = 0; i < tickets.length; i++) {
     const ticket = tickets[i];
     const { subject, requester_id: requesterId, updated_at: updatedAt, status, id } = ticket;
@@ -55,7 +69,15 @@ function showMultipleTickets (tickets) {
         `\n This was requested by ${chalk.cyan(requesterId)}` +
         ` and was last updated on ${chalk.cyan(date.format(new Date(updatedAt), 'ddd, MMM DD YYYY at h:mm A'))}` +
         `\n The Current Status is ${chalk.cyan(changeCase.headerCase(status))}`;
-    console.log(outputString);
-  }
+    let outputDict = {
+        "Ticket Id": id,
+        "Subject": subject,
+        "Requested By": requesterId,
+        "Last Updated": date.format(new Date(updatedAt), 'ddd, MMM DD YYYY at h:mm A'),
+        "Current Status": changeCase.headerCase(status),
+      };
+      dictTickets.push(outputDict);
+    }
+    console.table(dictTickets);
 }
 export default { showSingleTicket, show, showNotFoundError, showMultipleTickets, showTooManyRequestsError, showUnauthError, showGenericError };
