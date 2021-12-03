@@ -25,9 +25,8 @@ async function main () {
     programExit = true;
   } else {
     console.clear();
-    output.show("\n Taking you to the main menu anyway...");
+    output.show(`\n Did you mean to enter ${mainOptionKey.ENTER}? Here's the main menu anyway...`);
     programExit = false;
-      
   }
   
   while (!programExit) {
