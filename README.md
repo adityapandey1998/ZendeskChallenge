@@ -53,6 +53,9 @@ $ npm run coverage
 2. Based on the input, the test suite is completed and the coverage results are shown.
 3. Coverage without the .env file would be higher as it would cover more cases (and fallbacks)
 
+Current Coverage - 
+![Code Coverage](https://github.com/adityapandey1998/ZendeskChallenge/blob/main/img/code_coverage.png)
+
 ## Design Description
 
 ### Components 
