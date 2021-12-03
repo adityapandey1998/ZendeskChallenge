@@ -41,4 +41,14 @@ const ticketIdSchema = {
   }
 };
 
-export default { mainMenuSchema, ticketIdSchema, optionSchema, moreTicketsSchema };
+const enterSchema = {
+  properties: {
+    mainMenuOption: {
+      message: 'Press any key to continue',
+      required: false,
+      description: 'Press any key to continue'
+    }
+  }
+};
+
+export default { mainMenuSchema, ticketIdSchema, optionSchema, moreTicketsSchema, enterSchema };

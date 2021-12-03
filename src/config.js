@@ -10,14 +10,14 @@ const mainOptionKey = {
 };
 
 const APIConfig = {
-  baseDomain: process.env.baseDomain || "zccadityapandey",
+  baseDomain: process.env.zccBaseDomain || "zccadityapandey",
   baseURL: 'zendesk.com/api/v2/',
   ticketEndpoint: 'tickets/'
 };
 
 const authConfigs = {
-  email: process.env.email,
-  token: process.env.token
+  email: process.env.zccEmail,
+  token: process.env.zccToken
 };
 
 export { optionKey, mainOptionKey, APIConfig, authConfigs };

@@ -1,24 +1,14 @@
 import axios from 'axios';
 import prompt from 'prompt';
 import output from './output.js';
+import schema from './inputSchema.js'
 import { URL } from 'url';
 import { authConfigs, APIConfig } from './config.js';
-import { menus } from "./menus.js"
+import { menus } from './menus.js';
 prompt.start();
 
 prompt.message = '';
 prompt.delimiter = ':';
-
-const moreTicketsSchema = {
-  properties: {
-    moreTickets: {
-      pattern: /[ynYN]/,
-      message: 'Option Must be Y/N',
-      required: true,
-      description: 'Enter your choice (y/n)'
-    }
-  }
-};
 
 async function getTicketById (id) {
   const requestId = id;
@@ -83,7 +73,7 @@ async function getMultipleTickets (currOffset) {
 
       if (meta.has_more) {
         output.show('\n Do you want to see some more tickets?');
-        const { moreTickets } = await prompt.get(moreTicketsSchema);
+        const { moreTickets } = await prompt.get(schema.moreTicketsSchema);
         if (moreTickets.toLowerCase() == 'y') {
           const nextUrl = links.next;
           config.url = nextUrl;
