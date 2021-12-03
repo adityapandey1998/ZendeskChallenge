@@ -8,7 +8,7 @@ The Zendesk API is used to get tickets present in the account and is displayed i
 - [NodeJS](https://nodejs.org/en/) v16+
 - NPM v8+
 
-    - Updating NodeJS Version - [Link 1](https://docs.npmjs.com/try-the-latest-stable-version-of-node)/[Link 2](https://phoenixnap.com/kb/update-node-js-version)
+    - Updating NodeJS Version - [Link 1](https://docs.npmjs.com/try-the-latest-stable-version-of-node) / [Link 2](https://phoenixnap.com/kb/update-node-js-version)
     - Updating NPM - [Link](https://docs.npmjs.com/try-the-latest-stable-version-of-npm)
 
 ## Running Instructions
