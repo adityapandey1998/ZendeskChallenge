@@ -30,8 +30,12 @@ function showSingleTicket (response) {
       "URL": url
     };
     console.table(outputDict);
+    return true;
   } else {
-    console.log('Invalid ID');
+    const outputString = '\nThere was an error completing your request - \n' +
+    `\n ${chalk.redBright('We could not print the requested ticket\n Please Try Again in a while\n')}`;
+    console.log(outputString);
+    return false;
   }
 }
 
@@ -60,16 +64,17 @@ function showGenericError () {
 }
 
 function showMultipleTickets (tickets) {
-  var dictTickets = [];
-  for (let i = 0; i < tickets.length; i++) {
-    const ticket = tickets[i];
-    const { subject, requester_id: requesterId, updated_at: updatedAt, status, id } = ticket;
-    const outputString = `\nTicket Id: ${chalk.cyan(id)}` +
+  try {
+    var dictTickets = [];
+    for (let i = 0; i < tickets.length; i++) {
+      const ticket = tickets[i];
+      const { subject, requester_id: requesterId, updated_at: updatedAt, status, id } = ticket;
+      const outputString = `\nTicket Id: ${chalk.cyan(id)}` +
         `\n Subject: ${chalk.cyan(subject)}` +
         `\n This was requested by ${chalk.cyan(requesterId)}` +
         ` and was last updated on ${chalk.cyan(date.format(new Date(updatedAt), 'ddd, MMM DD YYYY at h:mm A'))}` +
         `\n The Current Status is ${chalk.cyan(changeCase.headerCase(status))}`;
-    let outputDict = {
+      let outputDict = {
         "Ticket Id": id,
         "Subject": subject,
         "Requested By": requesterId,
@@ -79,5 +84,12 @@ function showMultipleTickets (tickets) {
       dictTickets.push(outputDict);
     }
     console.table(dictTickets);
+    return true;
+  } catch(err) {
+    const outputString = '\nThere was an error completing your request - \n' +
+      `\n ${chalk.redBright('We could not print the tickets\n Please Try Again in a while\n')}`;
+    console.log(outputString);
+    return false;
+  }
 }
 export default { showSingleTicket, show, showNotFoundError, showMultipleTickets, showTooManyRequestsError, showUnauthError, showGenericError };

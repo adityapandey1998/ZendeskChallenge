@@ -16,8 +16,8 @@ const APIConfig = {
 };
 
 const authConfigs = {
-  email: process.env.zccEmail,
-  token: process.env.zccToken
+  email: process.env.zccEmail || "",
+  token: process.env.zccToken || ""
 };
 
 export { optionKey, mainOptionKey, APIConfig, authConfigs };

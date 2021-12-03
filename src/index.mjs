@@ -1,8 +1,9 @@
-import { menus } from './menus.js';
-import { optionKey, mainOptionKey } from './config.js';
-import { getTicketById, getMultipleTickets } from './requestUtils.js';
-import schema from "./inputSchema.js";
-import output from './output.js';
+import { menus } from './menus.mjs';
+import { optionKey, mainOptionKey } from './config.mjs';
+import { getTicketById, getMultipleTickets } from './requestUtils.mjs';
+import { authConfigs, APIConfig } from './config.mjs';
+import schema from "./inputSchema.mjs";
+import output from './output.mjs';
 import prompt from 'prompt';
 prompt.start();
 
@@ -11,7 +12,7 @@ prompt.delimiter = ':';
 
 async function main () {
   let programExit = true;
-  console.clear()
+  console.clear();
   output.show(menus.entry);
   const { mainMenuOption } = await prompt.get(schema.mainMenuSchema);
   if (mainMenuOption == mainOptionKey.ENTER) {
@@ -32,14 +33,14 @@ async function main () {
       const { option } = await prompt.get(schema.optionSchema);
 
       if (option == optionKey.GET_BY_ID) {
-        console.clear()
+        console.clear();
         output.show(menus.ticketById);
         const { ticketId } = await prompt.get(schema.ticketIdSchema);
-        console.clear()
+        console.clear();
         await getTicketById(Number(ticketId));
         await prompt.get(schema.enterSchema);
       } else if (option == optionKey.GET_ALL) {
-        console.clear()
+        console.clear();
         const currentPage = 0;
         await getMultipleTickets(currentPage);
         await prompt.get(schema.enterSchema);
@@ -53,7 +54,7 @@ async function main () {
     }
     
   }
-  console.clear()
+  console.clear();
   output.show(menus.exit);
 }
 

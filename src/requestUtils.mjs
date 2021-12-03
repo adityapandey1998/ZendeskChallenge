@@ -1,10 +1,10 @@
 import axios from 'axios';
 import prompt from 'prompt';
-import output from './output.js';
-import schema from './inputSchema.js'
+import output from './output.mjs';
+import schema from './inputSchema.mjs';
 import { URL } from 'url';
-import { authConfigs, APIConfig } from './config.js';
-import { menus } from './menus.js';
+import { authConfigs, APIConfig } from './config.mjs';
+import { menus } from './menus.mjs';
 prompt.start();
 
 prompt.message = '';
@@ -27,8 +27,9 @@ async function getTicketById (id) {
       Authorization: `Basic ${authString}`
     }
   };
+
   try {
-    output.show(menus.gettingTicket)
+    output.show(menus.gettingTicket);
     var response = await axios(config);
     output.showSingleTicket(response);
   } catch (err) {
@@ -45,13 +46,14 @@ async function getTicketById (id) {
   }
 }
 
-async function getMultipleTickets (currOffset) {
+async function getMultipleTickets () {
   const myURL = new URL(`https://${APIConfig.baseDomain}.${APIConfig.baseURL}${APIConfig.ticketEndpoint}`);
   const auth = authConfigs.token || '';
   const email = authConfigs.email || '';
 
   const tokenString = `${email}/token:${auth}`;
   const authString = Buffer.from(tokenString).toString('base64');
+
   const config = {
     method: 'get',
     url: myURL.href,
@@ -64,7 +66,7 @@ async function getMultipleTickets (currOffset) {
   };
 
   let paginationExit = false;
-  output.show(menus.gettingMultipleTickets)
+  output.show(menus.gettingMultipleTickets);
   while (!paginationExit) {
     try {
       const response = await axios(config);
@@ -103,4 +105,4 @@ async function getMultipleTickets (currOffset) {
   }
 }
 
-export { getTicketById, getMultipleTickets };
+export default { getTicketById, getMultipleTickets };
