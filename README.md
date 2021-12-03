@@ -52,9 +52,9 @@ $ npm run coverage
 1. Note that because it is an interactive application, one of the tests involves the user being prompted for an input.
 2. Based on the input, the test suite is completed and the coverage results are shown.
 
-## Design Choices
+## Design Description
 
-### Main Component Description
+### Components 
 
 - ```index.js``` : Entry Point. The menus are displayed here.
 - ```requestUtils.js``` : Uses the Zendesk API and gets a single ticket/multiple tickets based on user input.
