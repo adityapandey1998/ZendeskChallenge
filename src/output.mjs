@@ -68,25 +68,25 @@ function showMultipleTickets (tickets) {
 // The functions below contain standard eror messages
 function showNotFoundError () {
   const outputString = '\nThere was an error completing your request - \n' +
-    `\n ${chalk.redBright('We could not find any tickets with the specified ID(s)\n Please Try Again in a while\n')}`;
+    `\n ${chalk.redBright('We could not find any tickets with the specified ID(s)\n Please try again.\n')}`;
   console.log(outputString);
 }
 
 function showTooManyRequestsError () {
   const outputString = '\nThere was an error completing your request - \n' +
-    `\n ${chalk.redBright('Too many failed login attempts in a short period of time.\n Please Try Again in a while')}`;
+    `\n ${chalk.redBright('There have been too many failed attempts in a short period of time.\n Please try again later')}`;
   console.log(outputString);
 }
 
 function showUnauthError () {
   const outputString = '\nThere was an error completing your request - \n' +
-    `\n ${chalk.redBright('We could not authenticate you\n Please check your credentials and try Again')}\nHint: Check that you are passing the correct email and token in the environment variables\n`;
+    `\n ${chalk.redBright('We could not authenticate you\n Please check your credentials and try again later')}\nHint: Check that you are passing the correct email and token in the environment variables (.env file)\n`;
   console.log(outputString);
 }
 
 function showGenericError () {
   const outputString = '\nSomething went wrong on your side or ours :( \n' +
-    `\n ${chalk.redBright(' Please Try Again in a while')}\n`;
+    `\n ${chalk.redBright(' Please try again later')}\n`;
   console.log(outputString);
 }
 

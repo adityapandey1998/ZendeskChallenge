@@ -1,6 +1,6 @@
-# Zendesk-Challenge
+# Zendesk Coding Challenge
 
-A CLI Based application using Node.js. 
+A CLI Based application using Node.js that fetches and displays tickets.
 The Zendesk API is used to get tickets present in the account and is displayed in a tabular format
 
 ## Installations
@@ -51,6 +51,7 @@ $ npm run coverage
 
 1. Note that because it is an interactive application, one of the tests involves the user being prompted for an input.
 2. Based on the input, the test suite is completed and the coverage results are shown.
+3. Coverage without the .env file would be higher as it would cover more cases (and fallbacks)
 
 ## Design Description
 
