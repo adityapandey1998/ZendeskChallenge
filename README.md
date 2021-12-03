@@ -82,7 +82,7 @@ The authentication method used is a Token Based Authentication method. The API t
 
 The Token, Email ID and Base Domain are all passed as Environment variables (in a .env file) in the folllowing format - 
 ```
-zccEmail=<Your Email Here>
+zccEmail=<Your Email Here> (Eg. zccadityapandey)
 zccToken=<Your Token Here>
 zccBaseDomain=<Your Zendesk Base Domain Here>
 ```
