@@ -1,3 +1,5 @@
+// Here we have defined the input schema for the user input to choose different menu choices
+
 const moreTicketsSchema = {
   properties: {
     moreTickets: {
@@ -19,6 +21,7 @@ const optionSchema = {
     }
   }
 };
+
 const mainMenuSchema = {
   properties: {
     mainMenuOption: {

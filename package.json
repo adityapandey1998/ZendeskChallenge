@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "type": "module",
   "description": "A Node.js CLI application to display details of tickets using the Zendesk Tickets API",
-  "main": "src/index.js",
+  "main": "src/index.mjs",
   "scripts": {
     "test": "mocha",
-    "start": "node",
+    "start": "node src/index.mjs",
     "coverage": "c8 npm test"
   },
   "repository": {
@@ -38,6 +38,7 @@
     "chalk": "^5.0.0",
     "change-case": "^4.1.2",
     "date-and-time": "^2.0.1",
+    "dotenv": "^10.0.0",
     "eslint": "^7.32.0",
     "eslint-config-standard": "^16.0.3",
     "eslint-plugin-import": "^2.25.3",

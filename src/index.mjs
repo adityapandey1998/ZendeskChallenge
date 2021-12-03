@@ -1,10 +1,13 @@
 import { menus } from './menus.mjs';
 import { optionKey, mainOptionKey } from './config.mjs';
 import { getTicketById, getMultipleTickets } from './requestUtils.mjs';
-import { authConfigs, APIConfig } from './config.mjs';
 import schema from "./inputSchema.mjs";
 import output from './output.mjs';
 import prompt from 'prompt';
+
+// The index.mjs file is the starting point of our program
+// The initial menu and the business logic is controlled from here
+
 prompt.start();
 
 prompt.message = '';

@@ -1,3 +1,8 @@
+import dotenv from 'dotenv';
+dotenv.config()
+
+// The config.mjs file contains the Authentication and domain details to connect to the Zendesk API
+
 const optionKey = {
   GET_BY_ID: '2',
   GET_ALL: '1',

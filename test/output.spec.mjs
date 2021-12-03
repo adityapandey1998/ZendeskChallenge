@@ -1,7 +1,13 @@
-// require = require("esm")(module);
-
 import output from "../src/output.mjs" ;
 import { expect }  from 'chai';
+
+// Here we are testing the functions in output.mjs
+
+// We define 4 dummy responses - 
+// - A valid single ticket response 
+// - A single ticket response indicating NOT_FOUND
+// - A valid multiple tickets response 
+// - An invalid multiple tickets response 
 
 let singleTicketResponse = {
   status:200,
@@ -35,30 +41,31 @@ let singleTicketResponse_404 = {
     status:404  
   };
 
-  let multipleTicketResponse = [{
-          "url": "https://zccadityapandey.zendesk.com/api/v2/tickets/1.json",
-          "id": 1,
-          "external_id": null,
-          "created_at": "2021-11-30T01:23:14Z",
-          "updated_at": "2021-11-30T01:23:15Z",
-          "type": "incident",
-          "subject": "Sample ticket: Meet the ticket",
-          "raw_subject": "Sample ticket: Meet the ticket",
-          "description": "Hi there,\n\nI’m sending an email because I’m having a problem setting up your new product. Can you help me troubleshoot?\n\nThanks,\n The Customer\n\n",
-          "priority": null,
-          "status": "open",
-          "recipient": null,
-          "requester_id": 1910839722105,
-          "submitter_id": 1524707057641,
-          "assignee_id": 1524707057641,
-          "organization_id": null,
-          "group_id": 4411580647443,
-          "satisfaction_rating": null,
-          "sharing_agreement_ids": [],
-        }];
+let multipleTicketResponse = [{
+    "url": "https://zccadityapandey.zendesk.com/api/v2/tickets/1.json",
+    "id": 1,
+    "external_id": null,
+    "created_at": "2021-11-30T01:23:14Z",
+    "updated_at": "2021-11-30T01:23:15Z",
+    "type": "incident",
+    "subject": "Sample ticket: Meet the ticket",
+    "raw_subject": "Sample ticket: Meet the ticket",
+    "description": "Hi there,\n\nI’m sending an email because I’m having a problem setting up your new product. Can you help me troubleshoot?\n\nThanks,\n The Customer\n\n",
+    "priority": null,
+    "status": "open",
+    "recipient": null,
+    "requester_id": 1910839722105,
+    "submitter_id": 1524707057641,
+    "assignee_id": 1524707057641,
+    "organization_id": null,
+    "group_id": 4411580647443,
+    "satisfaction_rating": null,
+    "sharing_agreement_ids": [],
+  }];
 
-        let multipleTicketResponse_err = ["Err"];
+let multipleTicketResponse_err = ["Err"];
 
+// We test all the different functions in the output.js file and make sure they do not throw an error
 describe('output functions testing', function() {
 
   context('show()', function() {

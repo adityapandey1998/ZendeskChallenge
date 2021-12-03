@@ -1,11 +1,18 @@
 
-import requestUtils from "../src/requestUtils.mjs" ;
-import { expect }  from 'chai';
+import { getTicketById, getMultipleTickets } from "../src/requestUtils.mjs" ;
 import nock from 'nock';
+import { expect }  from 'chai';
+
+// Here we are testing the functions in requestUtils.mjs
+
+// We use 'nock' to mock the API call response to make our tests reproducible and independant of a true network call
+
+// Testing the single ticket search based on ID
+// We are handling the case where the API call is successful as well as the cases where the API Call returns a non-2XX status code
 
 describe('requestUtils - Single Ticket', function() {
 
-    beforeEach(() => {
+  beforeEach(() => {
         nock('https://zccadityapandey.zendesk.com')
           .get('/api/v2/tickets/1')
           .reply(200, {"ticket":{"url":"https://zccadityapandey.zendesk.com/api/v2/tickets/1","id":1,"external_id":null,"via":{"channel":"sample_ticket","source":{"from":{},"to":{},"rel":null}},"created_at":"2021-11-30T01:23:14Z","updated_at":"2021-11-30T01:23:15Z","type":"incident","subject":"Sample ticket: Meet the ticket","raw_subject":"Sample ticket: Meet the ticket","description":"Hi there,\n\nI’m sending an email because I’m having a problem setting up your new product. Can you help me troubleshoot?\n\nThanks,\n The Customer\n\n","priority":"normal","status":"open","recipient":null,"requester_id":1910839722105,"submitter_id":1524707057641,"assignee_id":1524707057641,"organization_id":null,"group_id":4411580647443,"collaborator_ids":[],"follower_ids":[],"email_cc_ids":[],"forum_topic_id":null,"problem_id":null,"has_incidents":false,"is_public":true,"due_at":null,"tags":["sample","support","zendesk"],"custom_fields":[],"satisfaction_rating":null,"sharing_agreement_ids":[],"fields":[],"followup_ids":[],"ticket_form_id":1900001020925,"brand_id":1900000533085,"allow_channelback":false,"allow_attachments":true}});
@@ -20,7 +27,7 @@ describe('requestUtils - Single Ticket', function() {
 
         nock('https://zccadityapandey.zendesk.com')
           .get('/api/v2/tickets/4')
-          .reply(443, {});
+          .reply(401, {});
 
         nock('https://zccadityapandey.zendesk.com')
           .get('/api/v2/tickets/5')
@@ -30,7 +37,7 @@ describe('requestUtils - Single Ticket', function() {
     context('show()', function() {
       it('should output the correct ticket', async function() {
           expect(async function() {
-            await requestUtils.getTicketById(1);
+            await getTicketById(1);
           }).to.not.throw();
       });
     });
@@ -38,7 +45,7 @@ describe('requestUtils - Single Ticket', function() {
     context('show()', function() {
         it('should output the specified error', async function() {
             expect(async function() {
-              await requestUtils.getTicketById(2);
+              await getTicketById(2);
             }).to.not.throw();
         });
       });
@@ -46,7 +53,7 @@ describe('requestUtils - Single Ticket', function() {
     context('show()', function() {
         it('should output the specified error', async function() {
             expect(async function() {
-              await requestUtils.getTicketById(3);
+              await getTicketById(3);
             }).to.not.throw();
         });
       });
@@ -54,7 +61,7 @@ describe('requestUtils - Single Ticket', function() {
     context('show()', function() {
         it('should output the specified error', async function() {
             expect(async function() {
-              await requestUtils.getTicketById(4);
+              await getTicketById(4);
             }).to.not.throw();
         });
       });
@@ -62,26 +69,30 @@ describe('requestUtils - Single Ticket', function() {
     context('show()', function() {
         it('should output the specified error', async function() {
             expect(async function() {
-              await requestUtils.getTicketById(5);
+              await getTicketById(5);
             }).to.not.throw();
         });
       });
 
 });
 
+
+// Testing the Multiple Tickets display here
+
+// We are handling the cases where the API Call returns a non-2XX status code
 describe('requestUtils - Multiple Tickets Error 404', function() {
 
     beforeEach(() => {
         nock('https://zccadityapandey.zendesk.com')
             .get("/api/v2/tickets/?page[size]=25")
-            .reply(404, {"ticket":{"url":"https://zccadityapandey.zendesk.com/api/v2/tickets/1","id":1,"external_id":null,"via":{"channel":"sample_ticket","source":{"from":{},"to":{},"rel":null}},"created_at":"2021-11-30T01:23:14Z","updated_at":"2021-11-30T01:23:15Z","type":"incident","subject":"Sample ticket: Meet the ticket","raw_subject":"Sample ticket: Meet the ticket","description":"Hi there,\n\nI’m sending an email because I’m having a problem setting up your new product. Can you help me troubleshoot?\n\nThanks,\n The Customer\n\n","priority":"normal","status":"open","recipient":null,"requester_id":1910839722105,"submitter_id":1524707057641,"assignee_id":1524707057641,"organization_id":null,"group_id":4411580647443,"collaborator_ids":[],"follower_ids":[],"email_cc_ids":[],"forum_topic_id":null,"problem_id":null,"has_incidents":false,"is_public":true,"due_at":null,"tags":["sample","support","zendesk"],"custom_fields":[],"satisfaction_rating":null,"sharing_agreement_ids":[],"fields":[],"followup_ids":[],"ticket_form_id":1900001020925,"brand_id":1900000533085,"allow_channelback":false,"allow_attachments":true}});
+            .reply(404, {});
 
     });
 
     context('show()', function() {
       it('should output the specified error', async function() {
           expect(async function() {
-            await requestUtils.getMultipleTickets();
+            await getMultipleTickets();
           }).to.not.throw();
       });
     });
@@ -92,14 +103,14 @@ describe('requestUtils - Multiple Tickets Error 401', function() {
     beforeEach(() => {
         nock('https://zccadityapandey.zendesk.com')
             .get("/api/v2/tickets/?page[size]=25")
-            .reply(401, {"ticket":{"url":"https://zccadityapandey.zendesk.com/api/v2/tickets/1","id":1,"external_id":null,"via":{"channel":"sample_ticket","source":{"from":{},"to":{},"rel":null}},"created_at":"2021-11-30T01:23:14Z","updated_at":"2021-11-30T01:23:15Z","type":"incident","subject":"Sample ticket: Meet the ticket","raw_subject":"Sample ticket: Meet the ticket","description":"Hi there,\n\nI’m sending an email because I’m having a problem setting up your new product. Can you help me troubleshoot?\n\nThanks,\n The Customer\n\n","priority":"normal","status":"open","recipient":null,"requester_id":1910839722105,"submitter_id":1524707057641,"assignee_id":1524707057641,"organization_id":null,"group_id":4411580647443,"collaborator_ids":[],"follower_ids":[],"email_cc_ids":[],"forum_topic_id":null,"problem_id":null,"has_incidents":false,"is_public":true,"due_at":null,"tags":["sample","support","zendesk"],"custom_fields":[],"satisfaction_rating":null,"sharing_agreement_ids":[],"fields":[],"followup_ids":[],"ticket_form_id":1900001020925,"brand_id":1900000533085,"allow_channelback":false,"allow_attachments":true}});
+            .reply(401, {});
 
     });
 
     context('show()', function() {
       it('should output the specified error', async function() {
           expect(async function() {
-            await requestUtils.getMultipleTickets();
+            await getMultipleTickets();
           }).to.not.throw();
       });
     });
@@ -110,14 +121,14 @@ describe('requestUtils - Multiple Tickets Error 429', function() {
     beforeEach(() => {
         nock('https://zccadityapandey.zendesk.com')
             .get("/api/v2/tickets/?page[size]=25")
-            .reply(429, {"ticket":{"url":"https://zccadityapandey.zendesk.com/api/v2/tickets/1","id":1,"external_id":null,"via":{"channel":"sample_ticket","source":{"from":{},"to":{},"rel":null}},"created_at":"2021-11-30T01:23:14Z","updated_at":"2021-11-30T01:23:15Z","type":"incident","subject":"Sample ticket: Meet the ticket","raw_subject":"Sample ticket: Meet the ticket","description":"Hi there,\n\nI’m sending an email because I’m having a problem setting up your new product. Can you help me troubleshoot?\n\nThanks,\n The Customer\n\n","priority":"normal","status":"open","recipient":null,"requester_id":1910839722105,"submitter_id":1524707057641,"assignee_id":1524707057641,"organization_id":null,"group_id":4411580647443,"collaborator_ids":[],"follower_ids":[],"email_cc_ids":[],"forum_topic_id":null,"problem_id":null,"has_incidents":false,"is_public":true,"due_at":null,"tags":["sample","support","zendesk"],"custom_fields":[],"satisfaction_rating":null,"sharing_agreement_ids":[],"fields":[],"followup_ids":[],"ticket_form_id":1900001020925,"brand_id":1900000533085,"allow_channelback":false,"allow_attachments":true}});
+            .reply(429, {});
 
     });
 
     context('show()', function() {
       it('should output the specified error', async function() {
           expect(async function() {
-            await requestUtils.getMultipleTickets();
+            await getMultipleTickets();
           }).to.not.throw();
       });
     });
@@ -128,19 +139,21 @@ describe('requestUtils - Multiple Tickets Error 443', function() {
     beforeEach(() => {
         nock('https://zccadityapandey.zendesk.com')
             .get("/api/v2/tickets/?page[size]=25")
-            .reply(443, {"ticket":{"url":"https://zccadityapandey.zendesk.com/api/v2/tickets/1","id":1,"external_id":null,"via":{"channel":"sample_ticket","source":{"from":{},"to":{},"rel":null}},"created_at":"2021-11-30T01:23:14Z","updated_at":"2021-11-30T01:23:15Z","type":"incident","subject":"Sample ticket: Meet the ticket","raw_subject":"Sample ticket: Meet the ticket","description":"Hi there,\n\nI’m sending an email because I’m having a problem setting up your new product. Can you help me troubleshoot?\n\nThanks,\n The Customer\n\n","priority":"normal","status":"open","recipient":null,"requester_id":1910839722105,"submitter_id":1524707057641,"assignee_id":1524707057641,"organization_id":null,"group_id":4411580647443,"collaborator_ids":[],"follower_ids":[],"email_cc_ids":[],"forum_topic_id":null,"problem_id":null,"has_incidents":false,"is_public":true,"due_at":null,"tags":["sample","support","zendesk"],"custom_fields":[],"satisfaction_rating":null,"sharing_agreement_ids":[],"fields":[],"followup_ids":[],"ticket_form_id":1900001020925,"brand_id":1900000533085,"allow_channelback":false,"allow_attachments":true}});
+            .reply(443, {});
 
     });
 
     context('show()', function() {
       it('should output the specified error', async function() {
           expect(async function() {
-            await requestUtils.getMultipleTickets();
+            await getMultipleTickets();
           }).to.not.throw();
       });
     });
 });
 
+// We are handling the case where the API call is successful
+// Because we have a prompt() here, during testing, the user can enter any option and the code coverage will be generated successfully
 describe('requestUtils - Multiple Tickets', function() {
 
     beforeEach(() => {
@@ -157,7 +170,7 @@ describe('requestUtils - Multiple Tickets', function() {
     context('show()', function() {
       it('should output the correct table', async function() {
           expect(async function() {
-            await requestUtils.getMultipleTickets();
+            await getMultipleTickets();
           }).to.not.throw();
       });
     });

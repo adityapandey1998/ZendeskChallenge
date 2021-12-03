@@ -5,11 +5,14 @@ import schema from './inputSchema.mjs';
 import { URL } from 'url';
 import { authConfigs, APIConfig } from './config.mjs';
 import { menus } from './menus.mjs';
+
 prompt.start();
 
 prompt.message = '';
 prompt.delimiter = ':';
 
+// This function gets the ticket based on the id and displays it
+// If the ticket ID is not present, an error message is diaplayed
 async function getTicketById (id) {
   const requestId = id;
   const myURL = new URL(`https://${APIConfig.baseDomain}.${APIConfig.baseURL}${APIConfig.ticketEndpoint}${requestId}`);
@@ -33,19 +36,23 @@ async function getTicketById (id) {
     var response = await axios(config);
     output.showSingleTicket(response);
   } catch (err) {
-
     if (err.response.status == 404) {
       output.showNotFoundError();
     } else if (err.response.status == 429) {
       output.showTooManyRequestsError();
-    } else if (err.response.status == 443) {
+    } else if (err.response.status == 401) {
       output.showUnauthError();
+      throw err;
     } else {
       output.showGenericError();
+      throw err;
       }
   }
 }
 
+// This function gets 25 tickets and displays them
+// After the first 25 tickets, the user is asked if they want to view more tickets and is yes, another request is 
+// sent to the API using the "links.next" value
 async function getMultipleTickets () {
   const myURL = new URL(`https://${APIConfig.baseDomain}.${APIConfig.baseURL}${APIConfig.ticketEndpoint}`);
   const auth = authConfigs.token || '';
@@ -94,15 +101,15 @@ async function getMultipleTickets () {
         output.showNotFoundError();
       } else if (err.response.status == 429) {
         output.showTooManyRequestsError();
-        throw err;
       } else if (err.response.status == 401) {
         output.showUnauthError();
         throw err;
       } else {
         output.showGenericError();
+        throw err;
       }
     }
   }
 }
 
-export default { getTicketById, getMultipleTickets };
+export { getTicketById, getMultipleTickets };
