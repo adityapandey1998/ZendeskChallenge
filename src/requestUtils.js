@@ -1,8 +1,9 @@
 import axios from 'axios';
+import prompt from 'prompt';
+import output from './output.js';
 import { URL } from 'url';
 import { authConfigs, APIConfig } from './config.js';
-import output from './output.js';
-import prompt from 'prompt';
+import { menus } from "./menus.js"
 prompt.start();
 
 prompt.message = '';
@@ -37,9 +38,11 @@ async function getTicketById (id) {
     }
   };
   try {
-    const response = await axios(config);
+    output.show(menus.gettingTicket)
+    var response = await axios(config);
     output.showSingleTicket(response);
   } catch (err) {
+
     if (err.response.status == 404) {
       output.showNotFoundError();
     } else if (err.response.status == 429) {
@@ -71,6 +74,7 @@ async function getMultipleTickets (currOffset) {
   };
 
   let paginationExit = false;
+  output.show(menus.gettingMultipleTickets)
   while (!paginationExit) {
     try {
       const response = await axios(config);
@@ -94,8 +98,6 @@ async function getMultipleTickets (currOffset) {
       }
     } catch (err) {
       paginationExit = true;
-      console.log(err);
-      console.log(err.response.status);
       if (err.response.status == 404) {
         output.showNotFoundError();
       } else if (err.response.status == 429) {

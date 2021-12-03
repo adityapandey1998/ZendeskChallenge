@@ -9,7 +9,7 @@ function show (message) {
 
 function showSingleTicket (response) {
   if (response.status == 200) {
-    const { subject, requester_id: requesterId, updated_at: updatedAt, status, id, description, priority, url } = response.data.ticket;
+    var { subject, requester_id: requesterId, updated_at: updatedAt, status, id, description, priority, url } = response.data.ticket;
     // const outputString = '\nYour ticket - \n' +
     //     `\n Id: ${chalk.cyan(id)}` +
     //     `\n Subject: ${chalk.cyan(subject)}` +
@@ -19,7 +19,7 @@ function showSingleTicket (response) {
     // console.log(outputString);
     if(priority==null)
       priority="None";
-    let outputDict = [{
+    let outputDict = {
       "Ticket Id": id,
       "Subject": subject,
       "Requested By": requesterId,
@@ -28,7 +28,7 @@ function showSingleTicket (response) {
       // "Description": description,
       "Priority" : priority,
       "URL": url
-    }];
+    };
     console.table(outputDict);
   } else {
     console.log('Invalid ID');
@@ -37,7 +37,7 @@ function showSingleTicket (response) {
 
 function showNotFoundError () {
   const outputString = '\nThere was an error completing your request - \n' +
-    `\n ${chalk.redBright('We could not find any tickets\n Please Try Again in a while')}`;
+    `\n ${chalk.redBright('We could not find any tickets with the specified ID(s)\n Please Try Again in a while\n')}`;
   console.log(outputString);
 }
 
