@@ -53,6 +53,7 @@ async function main () {
       }
       console.clear();
     } catch (err) {
+      await prompt.get(schema.enterSchema);
       programExit=true;
     }
     
